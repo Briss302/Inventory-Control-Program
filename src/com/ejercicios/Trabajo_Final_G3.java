@@ -57,10 +57,10 @@ public class Trabajo_Final_G3 {
         do {
             if (!listaEquipos.isEmpty()) {  //Este if evita que se vea error al estar la lista vacía
                 int equipo = lecturaCodigo("eliminar");
-                System.out.println(equipo);
+                //System.out.println("posición a eliminar: " + equipo);
                 listaEquipos.remove(equipo);
 
-                if (!listaEquipos.isEmpty()) System.out.println(listaEquipos.get(0)); //prueba para saber si funciona eliminar
+                //if (!listaEquipos.isEmpty()) System.out.println(listaEquipos); //prueba para saber si funciona eliminar
                 System.out.print("¿Desea eliminar otro equipo? (S/N): ");
                 respuesta = lector.next().toUpperCase();
             }
@@ -71,22 +71,39 @@ public class Trabajo_Final_G3 {
     private static int lecturaCodigo(String descripción) {
         //System.out.println("lecturaCodigo");
         Scanner lector = new Scanner(System.in);
-        String respuesta = "";
 
-        int equipo;
+        int equipo; //variable que almacenará el índice del equipo al que le corresponde el código que ingresó el usuario
         do {
             System.out.println("Ingresar el código del equipo a " + descripción + ".");
             String codigo = lector.next();
 
             equipo = buscarEquipo(1, codigo);
-        } while (equipo < 0);
+        } while (equipo < 0); //Si el equipo no existe o si el usuario ingresó mal el código, el método buscarEquipo devolverá -1, por lo que se repetirá el ciclo y se volverá a pedir el código al usuario
 
         return equipo;
     }
 
-    private static int buscarEquipo(int i, String codigo) {
+    private static int buscarEquipo(int propiedad, String etiqueta) { //Busca el índice del equipo que tiene la etiqueta respectiva en su propiedad respectiva
         System.out.println("buscarEquipo");
-        return 0;
+        int n = 0;
+        LinkedList equipo = new LinkedList<>();
+        String propEquipo;
+
+        while (true){
+            try{
+                equipo = (LinkedList) listaEquipos.get(n);
+                propEquipo = (String) equipo.get(propiedad);
+            } catch (Exception e) {
+                return n = -1;
+            }
+            if (!propEquipo.equals(null)) {
+                    if (propEquipo.equals((String) etiqueta)) return n;
+                    else {
+                        n++;
+                }
+            }
+            else return n = -1;
+        }
     }
 
     private static void disponibilidadTipo() { //Jonathan
