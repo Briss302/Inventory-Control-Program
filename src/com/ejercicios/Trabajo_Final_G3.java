@@ -58,6 +58,7 @@ public class Trabajo_Final_G3 {
             if (!listaEquipos.isEmpty()) {  //Este if evita que se vea error al estar la lista vacía
                 int equipo = lecturaCodigo("eliminar");
                 //System.out.println("posición a eliminar: " + equipo);
+                if (equipo == -2) break;
                 listaEquipos.remove(equipo);
 
                 //if (!listaEquipos.isEmpty()) System.out.println(listaEquipos); //prueba para saber si funciona eliminar
@@ -74,9 +75,10 @@ public class Trabajo_Final_G3 {
 
         int equipo; //variable que almacenará el índice del equipo al que le corresponde el código que ingresó el usuario
         do {
-            System.out.println("Ingresar el código del equipo a " + descripción + ".");
-            String codigo = lector.next();
+            System.out.print("Ingresar el código del equipo a " + descripción + " (caso contrario escriba SALIR): ");
+            String codigo = lector.next().toUpperCase();
 
+            if (codigo.equals("SALIR")) return -2;
             equipo = buscarEquipo(1, codigo);
         } while (equipo < 0); //Si el equipo no existe o si el usuario ingresó mal el código, el método buscarEquipo devolverá -1, por lo que se repetirá el ciclo y se volverá a pedir el código al usuario
 
