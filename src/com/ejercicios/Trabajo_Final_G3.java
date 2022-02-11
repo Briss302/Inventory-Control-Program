@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 import java.util.Scanner;
 public class Trabajo_Final_G3 {
-    final static int DATOS = 12;
+    final static int DATOS = 5;
     public static LinkedList listaEquipos = new LinkedList();
     public static String[] datos = {"Nombre", "Código", "Marca", "Modelo", "Serie", "Tipo", "Fecha de calibración", "Sede", "Fecha de ingreso", "Ubicación", "Estado", "Calibración"};
 
@@ -52,12 +52,25 @@ public class Trabajo_Final_G3 {
 
     private static void eliminarEquipo() { //Daniel
         System.out.println("eliminarEquipo");
-        String codigoEquipo = lecturaCodigo("eliminar");
+        Scanner lector = new Scanner(System.in);
+        String respuesta = "";
 
+        do {
+            if (!listaEquipos.isEmpty()) {  //Este if evita que se vea error al estar la lista vacía
+                int equipo = lecturaCodigo("eliminar");
+                listaEquipos.remove(equipo);
+
+                //if (!listaEquipos.isEmpty()) System.out.println(listaEquipos.get(0)); //prueba para saber si funciona eliminar
+                System.out.print("¿Desea eliminar otro equipo? (S/N): ");
+                respuesta = lector.next().toUpperCase();
+            }
+            else break;
+        } while (respuesta.equals("S"));
     }
 
-    private static String lecturaCodigo(String eliminar) {
-        return "X";
+    private static int lecturaCodigo(String eliminar) {
+
+        return 0;
     }
 
     private static void disponibilidadTipo() { //Jonathan
