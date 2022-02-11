@@ -1,34 +1,7 @@
-package com.ejercicios;
-
 import java.util.LinkedList;
 import java.util.Scanner;
-
-public class Trabajo_Final_G3_EDA {
-    /*public class equipo{
-        private String Nombre;
-        private String Codigo;
-        private String Marca;
-        private String Modelo;
-        private String Serie;
-        private String Tipo;
-        private String FechaCalibracion;
-        private String Sede;
-        private String FechaIngreso;
-        private String Ubicacion;
-        private String Estado;
-        private String Calibracion;
-
-        public equipo(String Nombre, String Codigo, String Marca, String Modelo){
-            Nombre = Nombre;
-            Codigo = Codigo;
-            Marca = Marca;
-            Modelo = Modelo;
-        }
-    }*/
-
-    final static int DATOS = 5;
-    //public static LinkedList equipo = new LinkedList();
-    //public static String[] equipo = new String[DATOS];
+public class Trabajo_Final_G3 {
+    final static int DATOS = 12;
     public static LinkedList listaEquipos = new LinkedList();
     public static String[] datos = {"Nombre", "Código", "Marca", "Modelo", "Serie", "Tipo", "Fecha de calibración", "Sede", "Fecha de ingreso", "Ubicación", "Estado", "Calibración"};
 
@@ -79,6 +52,12 @@ public class Trabajo_Final_G3_EDA {
 
     private static void eliminarEquipo() { //Daniel
         System.out.println("eliminarEquipo");
+        String codigoEquipo = lecturaCodigo("eliminar");
+
+    }
+
+    private static String lecturaCodigo(String eliminar) {
+        return "X";
     }
 
     private static void disponibilidadTipo() { //Jonathan
@@ -104,27 +83,37 @@ public class Trabajo_Final_G3_EDA {
     private static void ingresoEquipo() {
         System.out.println("ingresoEquipo");
         Scanner lector = new Scanner(System.in);
+        String respuesta = "";
 
-        for (int j = 0; j < 2; j++) {
+        do {
             LinkedList equipo = new LinkedList();
             for (int i = 0; i < DATOS-2; i++) {
                 System.out.print("Ingresar " + datos[i] + ":");
                 equipo.add(lector.next());
             }
-            listaEquipos.add(equipo);
-        }
+            equipo.add("Operativo");    //Estado del equipo
+            equipo.add(1);              //Estado de calibración. 1: Calibrado. 0: Descalibrado.
 
-        LinkedList listaPrueba = new LinkedList<>();
-        listaPrueba = (LinkedList) listaEquipos.get(0);
-        System.out.println(listaPrueba.get(2));
-        listaPrueba = (LinkedList) listaEquipos.get(1);
-        System.out.println(listaPrueba.get(2));
+            listaEquipos.add(equipo);
+
+            System.out.print("¿Desea ingresar otro equipo? (S/N): ");
+            respuesta = lector.next().toUpperCase();
+        } while (respuesta.equals("S"));
 
     }
 
     private static void crearInterfase() {
-        System.out.println("----------------------------------------");
-
+        System.out.println("-------------------------------------------");
+        System.out.println("-----------INVENTARIO DE EQUIPOS-----------");
+        System.out.println("-------------------------------------------");
+        System.out.println("--- Opciones disponibles:               ---");
+        System.out.println("--- 1. Ingreso de nuevo equipo.         ---");
+        System.out.println("--- 2. Salida de equipo a campo.        ---");
+        System.out.println("--- 3. Retorno de equipo desde campo.   ---");
+        System.out.println("--- 4. Enviar equipo a mantenimiento.   ---");
+        System.out.println("--- 5. Consulta de disponibilidad.      ---");
+        System.out.println("--- 6. Eliminar equipo.                 ---");
+        System.out.println("-------------------------------------------");
+        System.out.println("");
     }
 }
-
