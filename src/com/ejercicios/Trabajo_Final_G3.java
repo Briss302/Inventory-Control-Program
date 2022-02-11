@@ -51,16 +51,16 @@ public class Trabajo_Final_G3 {
     }
 
     private static void eliminarEquipo() { //Daniel
-        System.out.println("eliminarEquipo");
         Scanner lector = new Scanner(System.in);
         String respuesta = "";
 
         do {
             if (!listaEquipos.isEmpty()) {  //Este if evita que se vea error al estar la lista vacía
                 int equipo = lecturaCodigo("eliminar");
+                System.out.println(equipo);
                 listaEquipos.remove(equipo);
 
-                //if (!listaEquipos.isEmpty()) System.out.println(listaEquipos.get(0)); //prueba para saber si funciona eliminar
+                if (!listaEquipos.isEmpty()) System.out.println(listaEquipos.get(0)); //prueba para saber si funciona eliminar
                 System.out.print("¿Desea eliminar otro equipo? (S/N): ");
                 respuesta = lector.next().toUpperCase();
             }
@@ -68,8 +68,24 @@ public class Trabajo_Final_G3 {
         } while (respuesta.equals("S"));
     }
 
-    private static int lecturaCodigo(String eliminar) {
+    private static int lecturaCodigo(String descripción) {
+        //System.out.println("lecturaCodigo");
+        Scanner lector = new Scanner(System.in);
+        String respuesta = "";
 
+        int equipo;
+        do {
+            System.out.println("Ingresar el código del equipo a " + descripción + ".");
+            String codigo = lector.next();
+
+            equipo = buscarEquipo(1, codigo);
+        } while (equipo < 0);
+
+        return equipo;
+    }
+
+    private static int buscarEquipo(int i, String codigo) {
+        System.out.println("buscarEquipo");
         return 0;
     }
 
