@@ -115,6 +115,38 @@ public class Trabajo_Final_G3 {
 
     private static void mantenimiento() {
         System.out.println("mantenimiento");
+        Scanner lector = new Scanner(System.in);
+        String respuesta = "";
+
+        do {
+            if (!listaEquipos.isEmpty()) {
+                boolean test = true;
+                LinkedList equipoMantenimiento = new LinkedList<>(); //Valor por defecto
+                int equipo = -2;
+                do {
+                    equipo = lecturaCodigo("llevar a mantenimiento");
+
+                    if (equipo == -2) break; //Si el usuario seleccionó SALIR en lecturaCodigo()
+
+                    equipoMantenimiento = (LinkedList) listaEquipos.get(equipo);
+                    if (equipoMantenimiento.get(DATOS-2).equals("En campo")) System.out.println("El equipo se encuentra en campo");
+                    else if (equipoMantenimiento.get(DATOS-2).equals("En mantenimiento")) System.out.println("El equipo ya se encuentra en mantenimiento");
+                    else test = false;
+                }while (test);
+
+                equipoMantenimiento.set(DATOS-2,"En mantenimiento");
+
+                System.out.println("Ingrese el lugar del mantenimiento: ");
+                equipoMantenimiento.set(DATOS - 3, lector.next()); //Cambiando la ubicación del equipo al lugar del mantenimiento
+                listaEquipos.set(equipo, equipoMantenimiento);
+
+                System.out.println(listaEquipos); //DEBUG
+                System.out.print("¿Desea dar mantenimiento a otro equipo? (S/N): ");
+                respuesta = lector.next().toUpperCase();
+            }
+            else break;
+        } while(respuesta.equals("S"));
+
     }
 
     private static void retornoEquipo() {
@@ -133,11 +165,15 @@ public class Trabajo_Final_G3 {
                     if (equipo == -2) break; //Si el usuario seleccionó SALIR en lecturaCodigo()
 
                     equipoARetornar = (LinkedList) listaEquipos.get(equipo);
-                    if (!equipoARetornar.get(DATOS-2).equals("Operativo")) test = false;
-                    else System.out.println("el equipo no se encuentra con estado Operativo, podría estar en campo.");
+
+                    if (equipoARetornar.get(DATOS-2).equals("Operativo")) System.out.println("El equipo se encuentra con estado Operativo, no está en campo o en otra ubicación.");
+                    else if (equipoARetornar.get(DATOS-2).equals("Inoperativo")) System.out.println("El equipo se encuentra Inoperativo, envíelo a mantenimiento");
+                    else test = false;
                 }while (test);
 
-                System.out.println("¿El quipo retorna en buen estado? (S/N): ");
+                if (equipo == -2) break; //Si el usuario seleccionó SALIR en lecturaCodigo()
+
+                System.out.println("¿El equipo retorna en buen estado? (S/N): ");
                 if (lector.next().toUpperCase().equals("S")) equipoARetornar.set(DATOS-2,"Operativo");
                 else equipoARetornar.set(DATOS-2,"Inoperativo");
 
