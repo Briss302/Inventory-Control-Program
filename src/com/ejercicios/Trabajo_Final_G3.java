@@ -110,11 +110,38 @@ public class Trabajo_Final_G3 {
     }
 
     private static void disponibilidadEquipo() {
-        System.out.println("disponibilidadEquipo");
+        Scanner lector = new Scanner(System.in);
+        String respuesta = "";
+
+        do {
+            if (!listaEquipos.isEmpty()) {
+                boolean test = true;
+                LinkedList equipoDisponibilidad = new LinkedList<>(); //Valor por defecto
+
+                int equipo = lecturaCodigo("consultar disponibilidad");
+
+                if (equipo == -2) break; //Si el usuario seleccionó SALIR en lecturaCodigo()
+
+                equipoDisponibilidad = (LinkedList) listaEquipos.get(equipo);
+
+                String status = (String) equipoDisponibilidad.get(DATOS-2);
+                String ubicacion = (String) equipoDisponibilidad.get(DATOS-3);
+                int calibracion = (int) equipoDisponibilidad.get(DATOS-1);
+
+                System.out.println("El estado actual del equipo es: " + status + ".");
+                System.out.println("Su ubicación actual es: " + ubicacion + ".");
+                if (calibracion == 1) System.out.println("El equipo está calibrado.");
+                else System.out.println("El equipo necesita calibración.");
+
+                System.out.println(listaEquipos); //DEBUG
+                System.out.print("¿Desea consultar por otro equipo? (S/N): ");
+                respuesta = lector.next().toUpperCase();
+            }
+            else break;
+        } while(respuesta.equals("S"));
     }
 
     private static void mantenimiento() {
-        System.out.println("mantenimiento");
         Scanner lector = new Scanner(System.in);
         String respuesta = "";
 
@@ -133,6 +160,8 @@ public class Trabajo_Final_G3 {
                     else if (equipoMantenimiento.get(DATOS-2).equals("En mantenimiento")) System.out.println("El equipo ya se encuentra en mantenimiento");
                     else test = false;
                 }while (test);
+
+                if (equipo == -2) break; //Si el usuario seleccionó SALIR en lecturaCodigo()
 
                 equipoMantenimiento.set(DATOS-2,"En mantenimiento");
 
@@ -176,6 +205,10 @@ public class Trabajo_Final_G3 {
                 System.out.println("¿El equipo retorna en buen estado? (S/N): ");
                 if (lector.next().toUpperCase().equals("S")) equipoARetornar.set(DATOS-2,"Operativo");
                 else equipoARetornar.set(DATOS-2,"Inoperativo");
+
+                System.out.println("¿El equipo retorna calibrado? (S/N): ");
+                if (lector.next().toUpperCase().equals("S")) equipoARetornar.set(DATOS-1,1);
+                else equipoARetornar.set(DATOS-1,0);
 
                 System.out.print("Ingrese la nueva ubicación del equipo: ");
                 equipoARetornar.set(DATOS - 3, lector.next()); //Cambiando la ubicación del equipo
