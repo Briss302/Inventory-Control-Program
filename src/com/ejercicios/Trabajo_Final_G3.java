@@ -132,8 +132,7 @@ public class Trabajo_Final_G3 {
                 System.out.println("Su ubicación actual es: " + ubicacion + ".");
                 if (calibracion == 1) System.out.println("El equipo está calibrado.");
                 else System.out.println("El equipo necesita calibración.");
-
-                System.out.println(listaEquipos); //DEBUG
+                
                 System.out.print("¿Desea consultar por otro equipo? (S/N): ");
                 respuesta = lector.next().toUpperCase();
             }
