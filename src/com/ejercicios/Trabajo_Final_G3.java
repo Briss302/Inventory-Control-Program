@@ -69,7 +69,6 @@ public class Trabajo_Final_G3 {
     }
 
     private static int lecturaCodigo(String descripción) {
-        //System.out.println("lecturaCodigo");
         Scanner lector = new Scanner(System.in);
 
         int equipo; //variable que almacenará el índice del equipo al que le corresponde el código que ingresó el usuario
@@ -85,7 +84,6 @@ public class Trabajo_Final_G3 {
     }
 
     private static int buscarEquipo(int propiedad, String etiqueta) { //Busca el índice del equipo que tiene la etiqueta respectiva en su propiedad respectiva
-        System.out.println("buscarEquipo");
         int n = 0;
         LinkedList equipo = new LinkedList<>();
         String propEquipo;
@@ -120,14 +118,45 @@ public class Trabajo_Final_G3 {
     }
 
     private static void retornoEquipo() {
-        System.out.println("retornoEquipo");
+        Scanner lector = new Scanner(System.in);
+        String respuesta = "";
+
+        do {
+            if (!listaEquipos.isEmpty()) {
+                boolean test = true;
+                LinkedList equipoARetornar = new LinkedList<>(); //Valor por defecto
+                int equipo = -1;    //Valor por defecto
+
+                do {
+                    equipo = lecturaCodigo("retornar");
+
+                    if (equipo == -2) break; //Si el usuario seleccionó SALIR en lecturaCodigo()
+
+                    equipoARetornar = (LinkedList) listaEquipos.get(equipo);
+                    if (!equipoARetornar.get(DATOS-2).equals("Operativo")) test = false;
+                    else System.out.println("el equipo no se encuentra con estado Operativo, podría estar en campo.");
+                }while (test);
+
+                System.out.println("¿El quipo retorna en buen estado? (S/N): ");
+                if (lector.next().toUpperCase().equals("S")) equipoARetornar.set(DATOS-2,"Operativo");
+                else equipoARetornar.set(DATOS-2,"Inoperativo");
+
+                System.out.print("Ingrese la nueva ubicación del equipo: ");
+                equipoARetornar.set(DATOS - 3, lector.next()); //Cambiando la ubicación del equipo
+                listaEquipos.set(equipo, equipoARetornar);
+
+                System.out.println(listaEquipos); //DEBUG
+                System.out.print("¿Desea retornar otro equipo? (S/N): ");
+                respuesta = lector.next().toUpperCase();
+            }
+            else break;
+        } while(respuesta.equals("S"));
     }
 
     private static void salidaEquipo() {
-        System.out.println("salidaEquipo");
         Scanner lector = new Scanner(System.in);
-
         String respuesta = "";
+
         do {
             if (!listaEquipos.isEmpty()) {
                 int equipo = lecturaCodigo("llevar a campo");
@@ -146,7 +175,7 @@ public class Trabajo_Final_G3 {
                         equipoASalir.set(DATOS - 3, lector.next()); //Cambiando la ubicación del equipo
                         listaEquipos.set(equipo, equipoASalir);
 
-                        System.out.println(listaEquipos);
+                        System.out.println(listaEquipos);//DEBUG
                     } else {
                         System.out.println("El equipo está descalibrado.");
                     }
