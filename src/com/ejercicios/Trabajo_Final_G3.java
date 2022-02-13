@@ -62,7 +62,7 @@ public class Trabajo_Final_G3 {
                 listaEquipos.remove(equipo);
 
                 System.out.print("¿Desea eliminar otro equipo? (S/N): ");
-                respuesta = lector.next().toUpperCase();
+                respuesta = lector.nextLine().toUpperCase();
             }
             else break;
         } while (respuesta.equals("S"));
@@ -132,7 +132,7 @@ public class Trabajo_Final_G3 {
                 System.out.println("Su ubicación actual es: " + ubicacion + ".");
                 if (calibracion == 1) System.out.println("El equipo está calibrado.");
                 else System.out.println("El equipo necesita calibración.");
-                
+
                 System.out.print("¿Desea consultar por otro equipo? (S/N): ");
                 respuesta = lector.next().toUpperCase();
             }
@@ -174,7 +174,6 @@ public class Trabajo_Final_G3 {
             }
             else break;
         } while(respuesta.equals("S"));
-
     }
 
     private static void retornoEquipo() {
@@ -267,7 +266,7 @@ public class Trabajo_Final_G3 {
             LinkedList equipo = new LinkedList();
             for (int i = 0; i < DATOS-2; i++) {
                 System.out.print("Ingresar " + datos[i] + ":");
-                equipo.add(lector.next());
+                equipo.add(lector.nextLine());
             }
             equipo.add("Operativo");    //Estado del equipo
             equipo.add(1);              //Estado de calibración. 1: Calibrado. 0: Descalibrado.
@@ -275,7 +274,7 @@ public class Trabajo_Final_G3 {
             listaEquipos.add(equipo);
 
             System.out.print("¿Desea ingresar otro equipo? (S/N): ");
-            respuesta = lector.next().toUpperCase();
+            respuesta = lector.nextLine().toUpperCase();
         } while (respuesta.equals("S"));
 
     }
@@ -291,6 +290,7 @@ public class Trabajo_Final_G3 {
         System.out.println("--- 4. Enviar equipo a mantenimiento.   ---");
         System.out.println("--- 5. Consulta de disponibilidad.      ---");
         System.out.println("--- 6. Eliminar equipo.                 ---");
+        System.out.println("--- 7. Visualizar equipos.              ---");
         System.out.println("-------------------------------------------");
         System.out.println("");
     }
