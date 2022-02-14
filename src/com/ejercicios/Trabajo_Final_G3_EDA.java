@@ -1,8 +1,15 @@
+package com.ejercicios;
+
+import java.sql.Array;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Scanner;
-public class Trabajo_Final_G3 {
+
+
+public class Trabajo_Final_G3_EDA {
     final static int DATOS = 12;
     public static LinkedList listaEquipos = new LinkedList();
+    public static LinkedList listaTipos = new LinkedList();
     public static String[] datos = {"Nombre", "Código", "Marca", "Modelo", "Serie", "Tipo", "Fecha de calibración", "Sede", "Fecha de ingreso", "Ubicación", "Estado", "Calibración"};
 
     public static void main(String[] args) {
@@ -105,10 +112,6 @@ public class Trabajo_Final_G3 {
         }
     }
 
-    private static void disponibilidadTipo() { //Jonathan
-        System.out.println("disponibilidadTipo");
-    }
-
     private static void disponibilidadEquipo() {
         Scanner lector = new Scanner(System.in);
         String respuesta = "";
@@ -138,6 +141,28 @@ public class Trabajo_Final_G3 {
             }
             else break;
         } while(respuesta.equals("S"));
+    }
+
+    private static void disponibilidadTipo() {
+        Scanner lector = new Scanner(System.in);
+        String respuesta = "";
+
+        System.out.print("Ingrese el tipo de equipo a consultar: ");
+        respuesta = lector.next().toUpperCase();
+
+        do {
+            if(!listaEquipos.isEmpty()) {
+                int contador = 0;
+                for (int i = 0; i < listaTipos.size(); i++) {
+                    if(listaTipos.get(i).equals(respuesta)) {
+                        contador++;
+                    }
+                }
+                System.out.println("El número de equipos del tipo " + respuesta.toLowerCase() + " hay disponibles: " + contador);
+            } else break;
+
+        } while (respuesta.equals("S"));
+
     }
 
     private static void mantenimiento() {
@@ -266,7 +291,12 @@ public class Trabajo_Final_G3 {
             LinkedList equipo = new LinkedList();
             for (int i = 0; i < DATOS-2; i++) {
                 System.out.print("Ingresar " + datos[i] + ":");
-                equipo.add(lector.nextLine());
+
+                equipo.add(lector.next());
+                if(datos[i].equals("Tipo")) {
+                    listaTipos.add(equipo.get(i).toString().toUpperCase());
+                }
+
             }
             equipo.add("Operativo");    //Estado del equipo
             equipo.add(1);              //Estado de calibración. 1: Calibrado. 0: Descalibrado.
