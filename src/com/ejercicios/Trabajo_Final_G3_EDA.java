@@ -10,14 +10,29 @@ public class Trabajo_Final_G3_EDA {
     final static int DATOS = 12;
     public static LinkedList listaEquipos = new LinkedList();
     public static LinkedList listaTipos = new LinkedList();
-    public static String[] datos = {"Nombre", "Código", "Marca", "Modelo", "Serie", "Tipo", "Fecha de calibración", "Sede", "Fecha de ingreso", "Ubicación", "Estado", "Calibración"};
+    public static String[] datos = {"Nombre", "Código", "Marca", "Modelo", "Serie", "Tipo",
+                                    "Fecha de calibración", "Sede", "Fecha de ingreso", "Ubicación",
+                                    "Estado", "Calibración"};
 
     public static void main(String[] args) {
         Scanner lector = new Scanner(System.in);
+        LinkedList<String> datosEquipos = new LinkedList<String>();
 
         crearInterfase();
 
+        for (String dato: datos) {
+            datosEquipos.add(dato);
+        }
+
         while (true) {
+            System.out.println("");
+            System.out.println("Inventario actual: ");
+            System.out.println(datosEquipos);
+            for (Object equipo: listaEquipos) {
+                System.out.println(equipo);
+            }
+            //System.out.println(listaEquipos);//DEBUG
+            System.out.println("");
             System.out.print("Ingrese el número de la opción seleccionada: ");
             String opcion = lector.next();
 
@@ -57,7 +72,7 @@ public class Trabajo_Final_G3_EDA {
         }
     }
 
-    private static void eliminarEquipo() { //Daniel
+    private static void eliminarEquipo() {
         Scanner lector = new Scanner(System.in);
         String respuesta = "";
 
@@ -65,7 +80,7 @@ public class Trabajo_Final_G3_EDA {
             if (!listaEquipos.isEmpty()) {  //Este if evita que se vea error al estar la lista vacía
                 int equipo = lecturaCodigo("eliminar");
 
-                if (equipo == -2) break;    //Si el usuario seleccionó SALIR en lecturaCodigo()
+                if (equipo == -2) return;    //Si el usuario seleccionó SALIR en lecturaCodigo()
                 listaEquipos.remove(equipo);
 
                 System.out.print("¿Desea eliminar otro equipo? (S/N): ");
@@ -85,7 +100,8 @@ public class Trabajo_Final_G3_EDA {
 
             if (codigo.equals("SALIR")) return -2;
             equipo = buscarEquipo(1, codigo);
-        } while (equipo < 0); //Si el equipo no existe o si el usuario ingresó mal el código, el método buscarEquipo devolverá -1, por lo que se repetirá el ciclo y se volverá a pedir el código al usuario
+        } while (equipo < 0); //Si el equipo no existe o si el usuario ingresó mal el código,
+                              // el método buscarEquipo devolverá -1, por lo que se repetirá el ciclo y se volverá a pedir el código al usuario
 
         return equipo;
     }
@@ -123,7 +139,7 @@ public class Trabajo_Final_G3_EDA {
 
                 int equipo = lecturaCodigo("consultar disponibilidad");
 
-                if (equipo == -2) break; //Si el usuario seleccionó SALIR en lecturaCodigo()
+                if (equipo == -2) return; //Si el usuario seleccionó SALIR en lecturaCodigo()
 
                 equipoDisponibilidad = (LinkedList) listaEquipos.get(equipo);
 
@@ -131,10 +147,12 @@ public class Trabajo_Final_G3_EDA {
                 String ubicacion = (String) equipoDisponibilidad.get(DATOS-3);
                 int calibracion = (int) equipoDisponibilidad.get(DATOS-1);
 
+                System.out.println("");
                 System.out.println("El estado actual del equipo es: " + status + ".");
                 System.out.println("Su ubicación actual es: " + ubicacion + ".");
                 if (calibracion == 1) System.out.println("El equipo está calibrado.");
                 else System.out.println("El equipo necesita calibración.");
+                System.out.println("");
 
                 System.out.print("¿Desea consultar por otro equipo? (S/N): ");
                 respuesta = lector.next().toUpperCase();
@@ -158,7 +176,7 @@ public class Trabajo_Final_G3_EDA {
                         contador++;
                     }
                 }
-                System.out.println("El número de equipos del tipo " + respuesta.toLowerCase() + " hay disponibles: " + contador);
+                System.out.println("El número de equipos del tipo " + respuesta.toLowerCase() + " disponibles es: " + contador);
             } else break;
 
             System.out.print("¿Desea consultar por otro tipo? (S/N): ");
@@ -179,7 +197,7 @@ public class Trabajo_Final_G3_EDA {
                 do {
                     equipo = lecturaCodigo("llevar a mantenimiento");
 
-                    if (equipo == -2) break; //Si el usuario seleccionó SALIR en lecturaCodigo()
+                    if (equipo == -2) return; //Si el usuario seleccionó SALIR en lecturaCodigo()
 
                     equipoMantenimiento = (LinkedList) listaEquipos.get(equipo);
                     if (equipoMantenimiento.get(DATOS-2).equals("En campo")) System.out.println("El equipo se encuentra en campo");
@@ -187,7 +205,7 @@ public class Trabajo_Final_G3_EDA {
                     else test = false;
                 }while (test);
 
-                if (equipo == -2) break; //Si el usuario seleccionó SALIR en lecturaCodigo()
+                if (equipo == -2) return; //Si el usuario seleccionó SALIR en lecturaCodigo()
 
                 equipoMantenimiento.set(DATOS-2,"En mantenimiento");
 
@@ -195,7 +213,6 @@ public class Trabajo_Final_G3_EDA {
                 equipoMantenimiento.set(DATOS - 3, lector.nextLine()); //Cambiando la ubicación del equipo al lugar del mantenimiento
                 listaEquipos.set(equipo, equipoMantenimiento);
 
-                System.out.println(listaEquipos); //DEBUG
                 System.out.print("¿Desea dar mantenimiento a otro equipo? (S/N): ");
                 respuesta = lector.next().toUpperCase();
             }
@@ -216,16 +233,17 @@ public class Trabajo_Final_G3_EDA {
                 do {
                     equipo = lecturaCodigo("retornar");
 
-                    if (equipo == -2) break; //Si el usuario seleccionó SALIR en lecturaCodigo()
+                    if (equipo == -2) return; //Si el usuario seleccionó SALIR en lecturaCodigo()
 
                     equipoARetornar = (LinkedList) listaEquipos.get(equipo);
 
-                    if (equipoARetornar.get(DATOS-2).equals("Operativo")) System.out.println("El equipo se encuentra con estado Operativo, no está en campo o en otra ubicación.");
+                    if (equipoARetornar.get(DATOS-2).equals("Operativo")) System.out.println("El equipo se encuentra con estado Operativo, " +
+                                                                                              "no está en campo o en otra ubicación.");
                     else if (equipoARetornar.get(DATOS-2).equals("Inoperativo")) System.out.println("El equipo se encuentra Inoperativo, envíelo a mantenimiento");
                     else test = false;
                 }while (test);
 
-                if (equipo == -2) break; //Si el usuario seleccionó SALIR en lecturaCodigo()
+                if (equipo == -2) return; //Si el usuario seleccionó SALIR en lecturaCodigo()
 
                 System.out.println("¿El equipo retorna en buen estado? (S/N): ");
                 if (lector.next().toUpperCase().equals("S")) equipoARetornar.set(DATOS-2,"Operativo");
@@ -236,10 +254,9 @@ public class Trabajo_Final_G3_EDA {
                 else equipoARetornar.set(DATOS-1,0);
 
                 System.out.print("Ingrese la nueva ubicación del equipo: ");
-                equipoARetornar.set(DATOS - 3, lector.nextLine()); //Cambiando la ubicación del equipo
+                equipoARetornar.set(DATOS - 3, lector.next()); //Cambiando la ubicación del equipo
                 listaEquipos.set(equipo, equipoARetornar);
 
-                System.out.println(listaEquipos); //DEBUG
                 System.out.print("¿Desea retornar otro equipo? (S/N): ");
                 respuesta = lector.next().toUpperCase();
             }
@@ -255,7 +272,7 @@ public class Trabajo_Final_G3_EDA {
             if (!listaEquipos.isEmpty()) {
                 int equipo = lecturaCodigo("llevar a campo");
 
-                if (equipo == -2) break; //Si el usuario seleccionó SALIR en lecturaCodigo()
+                if (equipo == -2) return; //Si el usuario seleccionó SALIR en lecturaCodigo()
 
                 LinkedList equipoASalir = (LinkedList) listaEquipos.get(equipo);
                 String status = (String) equipoASalir.get(DATOS-2);
@@ -269,7 +286,6 @@ public class Trabajo_Final_G3_EDA {
                         equipoASalir.set(DATOS - 3, lector.next()); //Cambiando la ubicación del equipo
                         listaEquipos.set(equipo, equipoASalir);
 
-                        System.out.println(listaEquipos);//DEBUG
                     } else {
                         System.out.println("El equipo está descalibrado.");
                     }
@@ -285,7 +301,6 @@ public class Trabajo_Final_G3_EDA {
     }
 
     private static void ingresoEquipo() {
-        System.out.println("ingresoEquipo");
         Scanner lector = new Scanner(System.in);
         String respuesta = "";
 
@@ -324,6 +339,5 @@ public class Trabajo_Final_G3_EDA {
         System.out.println("--- 6. Eliminar equipo.                 ---");
         System.out.println("--- 7. Visualizar equipos.              ---");
         System.out.println("-------------------------------------------");
-        System.out.println("");
     }
 }
