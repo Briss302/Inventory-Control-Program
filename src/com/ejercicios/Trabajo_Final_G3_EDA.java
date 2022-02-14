@@ -98,7 +98,7 @@ public class Trabajo_Final_G3_EDA {
         while (true){
             try{
                 equipo = (LinkedList) listaEquipos.get(n);
-                propEquipo = (String) equipo.get(propiedad);
+                propEquipo = equipo.get(propiedad).toString().toUpperCase();
             } catch (Exception e) {
                 return n = -1;
             }
@@ -147,10 +147,10 @@ public class Trabajo_Final_G3_EDA {
         Scanner lector = new Scanner(System.in);
         String respuesta = "";
 
-        System.out.print("Ingrese el tipo de equipo a consultar: ");
-        respuesta = lector.next().toUpperCase();
-
         do {
+        System.out.print("Ingrese el tipo de equipo a consultar: ");
+        respuesta = lector.nextLine().toUpperCase();
+
             if(!listaEquipos.isEmpty()) {
                 int contador = 0;
                 for (int i = 0; i < listaTipos.size(); i++) {
@@ -161,6 +161,8 @@ public class Trabajo_Final_G3_EDA {
                 System.out.println("El número de equipos del tipo " + respuesta.toLowerCase() + " hay disponibles: " + contador);
             } else break;
 
+            System.out.print("¿Desea consultar por otro tipo? (S/N): ");
+            respuesta = lector.nextLine().toUpperCase();
         } while (respuesta.equals("S"));
 
     }
@@ -190,7 +192,7 @@ public class Trabajo_Final_G3_EDA {
                 equipoMantenimiento.set(DATOS-2,"En mantenimiento");
 
                 System.out.println("Ingrese el lugar del mantenimiento: ");
-                equipoMantenimiento.set(DATOS - 3, lector.next()); //Cambiando la ubicación del equipo al lugar del mantenimiento
+                equipoMantenimiento.set(DATOS - 3, lector.nextLine()); //Cambiando la ubicación del equipo al lugar del mantenimiento
                 listaEquipos.set(equipo, equipoMantenimiento);
 
                 System.out.println(listaEquipos); //DEBUG
@@ -234,7 +236,7 @@ public class Trabajo_Final_G3_EDA {
                 else equipoARetornar.set(DATOS-1,0);
 
                 System.out.print("Ingrese la nueva ubicación del equipo: ");
-                equipoARetornar.set(DATOS - 3, lector.next()); //Cambiando la ubicación del equipo
+                equipoARetornar.set(DATOS - 3, lector.nextLine()); //Cambiando la ubicación del equipo
                 listaEquipos.set(equipo, equipoARetornar);
 
                 System.out.println(listaEquipos); //DEBUG
@@ -292,7 +294,7 @@ public class Trabajo_Final_G3_EDA {
             for (int i = 0; i < DATOS-2; i++) {
                 System.out.print("Ingresar " + datos[i] + ":");
 
-                equipo.add(lector.next());
+                equipo.add(lector.nextLine());
                 if(datos[i].equals("Tipo")) {
                     listaTipos.add(equipo.get(i).toString().toUpperCase());
                 }
